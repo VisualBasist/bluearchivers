@@ -31,9 +31,12 @@ struct Profile {
 
     birthday: BirthDay,
     height: f64,
-    hobby: str,
+    hobby: &'static str,
 }
+
+struct BasicInfo {}
 
 pub struct Student {
     profile: Profile,
+    basic_info: BasicInfo,
 }
