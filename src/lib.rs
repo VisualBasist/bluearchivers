@@ -21,7 +21,7 @@ struct BirthDay {
 enum School {}
 enum Club {}
 
-pub struct Student {
+struct Profile {
     school: School,
     club: Club,
     name: FullName,
@@ -32,4 +32,8 @@ pub struct Student {
     birthday: BirthDay,
     height: f64,
     hobby: str,
+}
+
+pub struct Student {
+    profile: Profile,
 }
