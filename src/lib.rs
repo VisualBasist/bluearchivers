@@ -35,6 +35,7 @@ struct Profile {
 }
 
 // TODO ぴったりあってる言葉?品詞も考える
+// https://bluearchive.miraheze.org/wiki/Main_Page 参考になりそう
 enum AttackType {
     Explosion,
     Pierce,
