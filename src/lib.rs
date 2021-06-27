@@ -34,7 +34,22 @@ struct Profile {
     hobby: &'static str,
 }
 
-struct BasicInfo {}
+// TODO ぴったりあってる言葉?品詞も考える
+enum AttackType {
+    Explosion,
+    Pierce,
+    Mystic,
+}
+enum GuardType {
+    Light,
+    Heavy,
+    Special,
+}
+
+struct BasicInfo {
+    attack_type: AttackType,
+    guard_type: GuardType,
+}
 
 pub struct Student {
     profile: Profile,
