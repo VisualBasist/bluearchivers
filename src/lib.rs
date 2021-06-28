@@ -37,11 +37,11 @@ struct Profile {
 // TODO ぴったりあってる言葉?品詞も考える
 // https://bluearchive.miraheze.org/wiki/Main_Page 参考になりそう
 enum AttackType {
-    Explosion,
-    Pierce,
+    Explosive,
+    Penetration,
     Mystic,
 }
-enum GuardType {
+enum ArmorType {
     Light,
     Heavy,
     Special,
@@ -49,7 +49,7 @@ enum GuardType {
 
 struct BasicInfo {
     attack_type: AttackType,
-    guard_type: GuardType,
+    guard_type: ArmorType,
 }
 
 pub struct Student {
