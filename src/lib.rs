@@ -1,3 +1,5 @@
+mod currency;
+
 #[cfg(test)]
 mod tests {
     #[test]
