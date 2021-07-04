@@ -55,7 +55,7 @@ mod tests {
     fn buy_AP() {
         let mut ap = currency::AP::new(0, std::time::Instant::now());
         let mut blue_pyroxene = currency::BluePyroxene::new(30);
-        ap.buy_120(&mut blue_pyroxene).unwrap();
+        assert_eq!(ap.buy_120(&mut blue_pyroxene), Ok(()));
         assert_eq!(ap.get(), 120);
         assert_eq!(blue_pyroxene.get(), 0);
     }
