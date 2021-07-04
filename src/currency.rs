@@ -1,3 +1,4 @@
+#[derive(Debug, PartialEq, Eq)]
 struct AP {
     value: u32,
     // 1AP/6min
@@ -26,9 +27,11 @@ impl AP {
     }
 }
 
+#[derive(Debug, PartialEq, Eq)]
 struct Credit(u32);
+#[derive(Debug, PartialEq, Eq)]
 struct BluePyroxene(u32);
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 struct NotEnoughBluePyroxene;
 
 impl BluePyroxene {
@@ -46,7 +49,7 @@ impl BluePyroxene {
 
 #[cfg(test)]
 mod tests {
-    use crate::currency;
+    use crate::currency::{self, NotEnoughBluePyroxene};
 
     #[test]
     fn buy_AP() {
@@ -55,5 +58,14 @@ mod tests {
         ap.buy_120(&mut blue_pyroxene).unwrap();
         assert_eq!(ap.get(), 120);
         assert_eq!(blue_pyroxene.get(), 0);
+    }
+
+    #[test]
+    fn buy_AP_with_notwnough_blueproxene() {
+        let mut ap = currency::AP::new(0, std::time::Instant::now());
+        let mut blue_pyroxene = currency::BluePyroxene::new(29);
+        assert_eq!(ap.buy_120(&mut blue_pyroxene), Err(NotEnoughBluePyroxene));
+        assert_eq!(ap.get(), 0);
+        assert_eq!(blue_pyroxene.get(), 29);
     }
 }
