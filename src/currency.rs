@@ -61,7 +61,7 @@ mod tests {
     }
 
     #[test]
-    fn buy_AP_with_notwnough_blueproxene() {
+    fn buy_AP_with_notenough_blueproxene() {
         let mut ap = currency::AP::new(0, std::time::Instant::now());
         let mut blue_pyroxene = currency::BluePyroxene::new(29);
         assert_eq!(ap.buy_120(&mut blue_pyroxene), Err(NotEnoughBluePyroxene));
