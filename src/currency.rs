@@ -1,5 +1,6 @@
 #[derive(Debug, PartialEq, Eq)]
 struct AP {
+    // TODO 最大 999
     value: u32,
     // 1AP/6min
     last_recoverd_time: std::time::Instant,
