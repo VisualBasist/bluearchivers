@@ -21,6 +21,7 @@ impl AP {
         blue_pyroxene: &mut BluePyroxene,
     ) -> Result<(), NotEnoughBluePyroxene> {
         const AP_AMOUNT: u32 = 120;
+        // TODO: 999を超える場合は買えない
         const AP_PER_BLUEPYROXENE: u32 = 4;
         blue_pyroxene.consume(AP_AMOUNT / AP_PER_BLUEPYROXENE)?;
         self.value += AP_AMOUNT;
