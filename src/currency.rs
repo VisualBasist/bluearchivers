@@ -6,6 +6,11 @@ struct AP {
     last_recoverd_time: std::time::Instant,
 }
 
+#[derive(Debug, PartialEq, Eq)]
+enum APError {
+    NotEnoughBluePyroxene,
+}
+
 impl AP {
     pub fn new(value: u32, last_recoverd_time: std::time::Instant) -> AP {
         AP {
@@ -16,14 +21,13 @@ impl AP {
     pub fn get(&self) -> u32 {
         self.value
     }
-    pub fn buy_120(
-        &mut self,
-        blue_pyroxene: &mut BluePyroxene,
-    ) -> Result<(), NotEnoughBluePyroxene> {
+    pub fn buy_120(&mut self, blue_pyroxene: &mut BluePyroxene) -> Result<(), APError> {
         const AP_AMOUNT: u32 = 120;
         // TODO: 999を超える場合は買えない
         const AP_PER_BLUEPYROXENE: u32 = 4;
-        blue_pyroxene.consume(AP_AMOUNT / AP_PER_BLUEPYROXENE)?;
+        blue_pyroxene
+            .consume(AP_AMOUNT / AP_PER_BLUEPYROXENE)
+            .or(Err(APError::NotEnoughBluePyroxene))?;
         self.value += AP_AMOUNT;
         Ok(())
     }
@@ -51,7 +55,7 @@ impl BluePyroxene {
 
 #[cfg(test)]
 mod tests {
-    use crate::currency::{self, NotEnoughBluePyroxene};
+    use crate::currency::{self, APError, NotEnoughBluePyroxene};
 
     #[test]
     fn buy_AP() {
@@ -66,7 +70,10 @@ mod tests {
     fn buy_AP_with_notenough_blueproxene() {
         let mut ap = currency::AP::new(0, std::time::Instant::now());
         let mut blue_pyroxene = currency::BluePyroxene::new(29);
-        assert_eq!(ap.buy_120(&mut blue_pyroxene), Err(NotEnoughBluePyroxene));
+        assert_eq!(
+            ap.buy_120(&mut blue_pyroxene),
+            Err(APError::NotEnoughBluePyroxene)
+        );
         assert_eq!(ap.get(), 0);
         assert_eq!(blue_pyroxene.get(), 29);
     }
