@@ -10,12 +10,15 @@ struct AP {
 enum APError {
     // TODO: 足りない個数
     NotEnoughBluePyroxene,
+    APUpperLimit,
 }
 
 impl std::fmt::Display for APError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             APError::NotEnoughBluePyroxene => write!(f, "青輝石が足りません"),
+            // TODO: 本家のメッセージに合わせる
+            APError::APUpperLimit => write!(f, "これ以上APを持てません"),
         }
     }
 }
@@ -33,7 +36,10 @@ impl AP {
     }
     pub fn buy_120(&mut self, blue_pyroxene: &mut BluePyroxene) -> Result<(), APError> {
         const AP_AMOUNT: u32 = 120;
-        // TODO: 999を超える場合は買えない
+        const AP_UPPER_LIMIT: u32 = 999;
+        if self.value + 120 > AP_UPPER_LIMIT {
+            return Err(APError::APUpperLimit);
+        }
         const AP_PER_BLUEPYROXENE: u32 = 4;
         blue_pyroxene
             .consume(AP_AMOUNT / AP_PER_BLUEPYROXENE)
@@ -86,5 +92,14 @@ mod tests {
         );
         assert_eq!(ap.get(), 0);
         assert_eq!(blue_pyroxene.get(), 29);
+    }
+
+    #[test]
+    fn AP_exceeds_upper_limit() {
+        let mut ap = currency::AP::new(880, std::time::Instant::now());
+        let mut blue_pyroxene = currency::BluePyroxene::new(30);
+        assert_eq!(ap.buy_120(&mut blue_pyroxene), Err(APError::APUpperLimit));
+        assert_eq!(ap.get(), 880);
+        assert_eq!(blue_pyroxene.get(), 30);
     }
 }
