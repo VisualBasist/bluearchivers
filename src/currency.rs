@@ -11,6 +11,15 @@ enum APError {
     NotEnoughBluePyroxene,
 }
 
+impl std::fmt::Display for APError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            APError::NotEnoughBluePyroxene => write!(f, "青輝石が足りません"),
+        }
+    }
+}
+impl std::error::Error for APError {}
+
 impl AP {
     pub fn new(value: u32, last_recoverd_time: std::time::Instant) -> AP {
         AP {
