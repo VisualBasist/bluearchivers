@@ -37,7 +37,7 @@ impl AP {
     pub fn buy_120(&mut self, blue_pyroxene: &mut BluePyroxene) -> Result<(), APError> {
         const AP_AMOUNT: u32 = 120;
         const AP_UPPER_LIMIT: u32 = 999;
-        if self.value + 120 > AP_UPPER_LIMIT {
+        if self.value + AP_AMOUNT > AP_UPPER_LIMIT {
             return Err(APError::APUpperLimit);
         }
         const AP_PER_BLUEPYROXENE: u32 = 4;
