@@ -8,6 +8,7 @@ struct AP {
 
 #[derive(Debug, PartialEq, Eq)]
 enum APError {
+    // TODO: 足りない個数
     NotEnoughBluePyroxene,
 }
 
