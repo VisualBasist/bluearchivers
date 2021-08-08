@@ -41,6 +41,9 @@ impl AP {
             return Err(APError::APUpperLimit);
         }
         const AP_PER_BLUEPYROXENE: u32 = 4;
+
+        // TODO orで変換するんじゃなくてFromトレイトを実装した方が良いのかな?
+
         blue_pyroxene
             .consume(AP_AMOUNT / AP_PER_BLUEPYROXENE)
             .or(Err(APError::NotEnoughBluePyroxene))?;
